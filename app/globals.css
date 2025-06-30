@@ -1,0 +1,113 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&family=Open+Sans:wght@300;400;500;600;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 0 0% 100%;
+  --foreground: 222.2 84% 4.9%;
+  --card: 0 0% 100%;
+  --card-foreground: 222.2 84% 4.9%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 222.2 84% 4.9%;
+  --primary: 221.2 83.2% 53.3%;
+  --primary-foreground: 210 40% 98%;
+  --secondary: 210 40% 96%;
+  --secondary-foreground: 222.2 84% 4.9%;
+  --muted: 210 40% 96%;
+  --muted-foreground: 215.4 16.3% 46.9%;
+  --accent: 210 40% 96%;
+  --accent-foreground: 222.2 84% 4.9%;
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 210 40% 98%;
+  --border: 214.3 31.8% 91.4%;
+  --input: 214.3 31.8% 91.4%;
+  --ring: 221.2 83.2% 53.3%;
+  --radius: 0.75rem;
+  --moonrise-start: #DAE2F8;
+  --moonrise-end: #D6A4A4;
+  --mystical-gold: 45 69% 52%;
+  --mystical-deep-purple: 266 69% 39%;
+  --mystical-dark-purple: 266 69% 18%;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-white text-foreground font-sans;
+    font-family: 'Roboto', 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, var(--moonrise-start) 0%, var(--moonrise-end) 100%);
+    min-height: 100vh;
+  }
+  
+  .moonrise-card {
+    @apply bg-white/90 backdrop-blur-sm border border-white/20 
+           hover:border-white/40 transition-all duration-300
+           hover:shadow-lg hover:shadow-black/5;
+    background: rgba(255, 255, 255, 0.95);
+  }
+  
+  .mystical-card {
+    @apply bg-white/90 backdrop-blur-sm border border-mystical-gold/20 
+           hover:border-mystical-gold/40 transition-all duration-300
+           hover:shadow-lg hover:shadow-mystical-gold/10;
+    background: rgba(255, 255, 255, 0.95);
+  }
+  
+  .moonrise-button {
+    @apply bg-gradient-to-r from-blue-500 to-purple-600 
+           text-white font-medium
+           hover:from-blue-600 hover:to-purple-700
+           transition-all duration-300 hover:scale-105
+           hover:shadow-lg hover:shadow-blue-500/25;
+  }
+  
+  .mystical-button {
+    @apply bg-gradient-to-r from-mystical-gold to-yellow-600 
+           text-mystical-dark-purple font-medium
+           hover:from-yellow-500 hover:to-mystical-gold
+           transition-all duration-300 hover:scale-105
+           hover:shadow-lg hover:shadow-mystical-gold/25;
+  }
+  
+  .section-title {
+    @apply text-3xl md:text-4xl font-bold text-gray-800 
+           font-sans mb-6 text-center
+           animate-fade-in;
+  }
+  
+  .moonrise-glow {
+    @apply animate-glow-pulse;
+  }
+  
+  .font-mystical {
+    font-family: 'Roboto', serif;
+    font-weight: 600;
+  }
+  
+  .font-hebrew {
+    font-family: 'Times New Roman', serif;
+  }
+  
+  .font-greek {
+    font-family: 'Times New Roman', serif;
+  }
+  
+  .cosmic-background {
+    background: linear-gradient(135deg, var(--moonrise-start) 0%, var(--moonrise-end) 100%);
+  }
+}
+
+@layer components {
+  .moonrise-background {
+    background: linear-gradient(135deg, var(--moonrise-start) 0%, var(--moonrise-end) 100%);
+  }
+  
+  .content-container {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+}
