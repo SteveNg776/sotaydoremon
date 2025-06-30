@@ -95,11 +95,8 @@ export function CalendarView() {
       const lunarDay = lunarInfo.lunarDateDetailed.day;
       const lunarMonth = lunarInfo.lunarDateDetailed.month;
       
-      // Hiển thị "ngày/tháng" nếu là ngày mùng 1, chỉ hiển thị ngày nếu không phải
-      if (lunarDay === 1) {
-        return `${lunarDay}/${lunarMonth}`;
-      }
-      return lunarDay.toString();
+      // Always return a green dot instead of numbers
+      return '●';
     } catch (error) {
       return '';
     }
@@ -270,9 +267,9 @@ export function CalendarView() {
                                 {date.getDate()}
                               </div>
                               
-                              {/* Lunar date */}
+                              {/* Lunar date - now showing green dot */}
                               {isCurrentMonthDate && lunarDay && (
-                                <div className="text-xs text-green-600 font-medium">
+                                <div className="text-xs text-green-600 font-bold">
                                   {lunarDay}
                                 </div>
                               )}
@@ -398,7 +395,7 @@ export function CalendarView() {
                 <span>Ngày cuối tuần</span>
               </div>
               <div className="flex items-center space-x-2">
-                <span className="text-green-600 font-bold text-xs">15</span>
+                <span className="text-green-600 font-bold text-xs">●</span>
                 <span>Ngày âm lịch</span>
               </div>
             </div>
