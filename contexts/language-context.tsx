@@ -20,8 +20,6 @@ const translations: Translations = {
   nav: {
     home: "Trang Chủ",
     iching: "Kinh Dịch",
-    gematria: "Gematria",
-    tarot: "Tarot",
     dateCalculator: "Thần Số Học",
     blog: "Blog",
     profile: "Hồ Sơ",
@@ -46,7 +44,7 @@ const translations: Translations = {
   },
   home: {
     title: "Khám Phá Những Bí Ẩn Của Trí Tuệ Cổ Đại",
-    subtitle: "Khám phá chiều sâu sâu sắc của Kinh Dịch, Gematria và Tarot thông qua các công cụ tương tác và hướng dẫn toàn diện. Hành trình vào các truyền thống bí truyền đã hướng dẫn những người tìm kiếm trong hàng thiên niên kỷ.",
+    subtitle: "Khám phá chiều sâu sâu sắc của Kinh Dịch và Thần Số Học thông qua các công cụ tương tác và hướng dẫn toàn diện. Hành trình vào các truyền thống bí truyền đã hướng dẫn những người tìm kiếm trong hàng thiên niên kỷ.",
     beginJourney: "Bắt Đầu Hành Trình",
     exploreTraditions: "Khám Phá Truyền Thống",
     featuresTitle: "Công Cụ Thiêng Liêng & Bói Toán",

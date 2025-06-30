@@ -6,7 +6,7 @@ export function Footer() {
   return (
     <footer className="bg-white/50 backdrop-blur-sm border-t border-white/20">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Brand */}
           <div className="col-span-1 md:col-span-2">
             <div className="flex items-center space-x-2 mb-4">
@@ -19,7 +19,7 @@ export function Footer() {
             </div>
             <p className="text-gray-600 mb-4 max-w-md">
               Khám phá trí tuệ cổ đại và kiến thức bí truyền thông qua các công cụ tương tác và hướng dẫn toàn diện. 
-              Khám phá những bí ẩn của Kinh Dịch, Gematria, Tarot và nhiều hơn nữa.
+              Khám phá những bí ẩn của Kinh Dịch và Thần Số Học.
             </p>
           </div>
 
@@ -33,40 +33,13 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/gematria" className="text-gray-600 hover:text-blue-600 transition-colors">
-                  Máy Tính Gematria
-                </Link>
-              </li>
-              <li>
-                <Link href="/tarot" className="text-gray-600 hover:text-blue-600 transition-colors">
-                  Đọc Tarot
-                </Link>
-              </li>
-              <li>
                 <Link href="/date-calculator" className="text-gray-600 hover:text-blue-600 transition-colors">
                   Thần Số Học
                 </Link>
               </li>
-            </ul>
-          </div>
-
-          {/* Resources */}
-          <div>
-            <h3 className="text-gray-800 font-semibold mb-4">Tài Nguyên</h3>
-            <ul className="space-y-2">
               <li>
                 <Link href="/about" className="text-gray-600 hover:text-blue-600 transition-colors">
                   Về Chúng Tôi
-                </Link>
-              </li>
-              <li>
-                <Link href="/guides" className="text-gray-600 hover:text-blue-600 transition-colors">
-                  Hướng Dẫn Học Tập
-                </Link>
-              </li>
-              <li>
-                <Link href="/privacy" className="text-gray-600 hover:text-blue-600 transition-colors">
-                  Chính Sách Bảo Mật
                 </Link>
               </li>
               <li>
