@@ -12,6 +12,7 @@ import {
   Eye,
   Moon,
   Sun,
+  Star,
   CalendarDays
 } from 'lucide-react';
 
