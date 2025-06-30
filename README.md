@@ -7,8 +7,6 @@ Một ứng dụng web toàn diện để khám phá trí tuệ cổ đại và 
 Nghiên Cứu Huyền Bí là một nền tảng web cung cấp các công cụ và hướng dẫn để khám phá:
 
 - **Kinh Dịch Oracle**: Tham khảo Kinh Dịch cổ đại với trình tạo quẻ tương tác
-- **Máy tính Gematria**: Khám phá Gematria Hebrew, Hy Lạp và tiếng Anh
-- **Đọc Tarot**: Rút bài và nhận hiểu biết sâu sắc (đang phát triển)
 - **Thần Số Học**: Công cụ lịch âm dương với phân tích số học chi tiết
 
 ## 🚀 Hướng dẫn cài đặt và chạy
@@ -50,9 +48,7 @@ npm start
 occult-studies-web/
 ├── app/                          # Next.js App Router
 │   ├── date-calculator/         # Trang Thần Số Học
-│   ├── gematria/               # Trang Gematria
 │   ├── i-ching/                # Trang Kinh Dịch
-│   ├── tarot/                  # Trang Tarot
 │   ├── globals.css             # CSS toàn cục
 │   ├── layout.tsx              # Layout chính
 │   └── page.tsx                # Trang chủ
@@ -101,21 +97,11 @@ occult-studies-web/
 - Giải thích chi tiết cho từng quẻ
 - Phân tích vạch thay đổi
 
-### 2. Máy tính Gematria
-- Hỗ trợ Hebrew Standard, Greek Isopsephy
-- English Ordinal và Simple Reduction
-- Phân tích từng ký tự
-- Giao diện trực quan
-
-### 3. Thần Số Học
+### 2. Thần Số Học
 - **Sổ tay ngày**: Phân tích chi tiết ngày được chọn
 - **Chuyển đổi âm-dương**: Chuyển đổi chính xác giữa hai loại lịch
 - **Nhập số**: Tìm ngày theo số thứ tự hoặc số ngày còn lại
 - **Xem lịch**: Lịch tương tác với thông tin âm lịch
-
-### 4. Đọc Tarot
-- Đọc một lá bài (đang phát triển)
-- Kế hoạch mở rộng: Three Card Spread, Celtic Cross
 
 ## 🎨 Thiết kế
 

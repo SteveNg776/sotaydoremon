@@ -14,8 +14,6 @@ export function Navbar() {
   const navigationItems = [
     { name: 'Trang Chủ', href: '/' },
     { name: 'Kinh Dịch', href: '/i-ching' },
-    { name: 'Gematria', href: '/gematria' },
-    { name: 'Tarot', href: '/tarot' },
     { name: 'Thần Số Học', href: '/date-calculator' },
   ];
 

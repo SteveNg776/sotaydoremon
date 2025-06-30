@@ -11,12 +11,12 @@ const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
 export const metadata: Metadata = {
   title: 'Mystic Studies - Ancient Wisdom & Esoteric Knowledge',
-  description: 'Explore the mysteries of Kinh Dịch, Gematria, Tarot, and ancient wisdom traditions. Interactive tools for divination and spiritual insight.',
-  keywords: 'Kinh Dịch, Gematria, Tarot, occult, esoteric, divination, mysticism, spirituality',
+  description: 'Explore the mysteries of I Ching and Numerology through interactive tools and comprehensive guidance.',
+  keywords: 'I Ching, numerology, lunar calendar, ancient wisdom, divination, mysticism, spirituality',
   authors: [{ name: 'Mystic Studies' }],
   openGraph: {
     title: 'Mystic Studies - Ancient Wisdom & Esoteric Knowledge',
-    description: 'Explore the mysteries of Kinh Dịch, Gematria, Tarot, and ancient wisdom traditions.',
+    description: 'Explore the mysteries of I Ching and Numerology through interactive tools.',
     type: 'website',
   },
 };

@@ -8,10 +8,6 @@ import { Badge } from '@/components/ui/badge';
 import { 
   Sparkles, 
   BookOpen, 
-  Calculator, 
-  Shuffle, 
-  Star, 
-  Zap,
   ChevronRight,
   Eye,
   Moon,
@@ -30,22 +26,6 @@ export default function HomePage() {
       color: 'text-blue-400'
     },
     {
-      icon: Calculator,
-      title: 'Máy Tính Gematria',
-      description: 'Khám phá Gematria Hebrew, Hy Lạp và tiếng Anh với nhiều hệ thống mật mã và phân tích số học.',
-      href: '/gematria',
-      badge: 'Kabbalah',
-      color: 'text-purple-400'
-    },
-    {
-      icon: Shuffle,
-      title: 'Đọc Tarot',
-      description: 'Rút bài và nhận được những hiểu biết sâu sắc với bộ bài tarot toàn diện và hệ thống giải thích.',
-      href: '/tarot',
-      badge: 'Bói Toán',
-      color: 'text-amber-400'
-    },
-    {
       icon: CalendarDays,
       title: 'Thần Số Học',
       description: 'Công cụ lịch âm dương toàn diện để phân tích và chuyển đổi ngày tháng với thông tin chi tiết.',
@@ -60,11 +40,6 @@ export default function HomePage() {
       title: 'Huyền Học Phương Đông',
       description: 'Khám phá Kinh Dịch, Phong Thủy và các truyền thống trí tuệ cổ đại của Trung Quốc',
       icon: Sun,
-    },
-    {
-      title: 'Huyền Học Phương Tây',
-      description: 'Tìm hiểu Kabbalah, Tarot, Gematria và các truyền thống Hermetic',
-      icon: Moon,
     },
     {
       title: 'Trí Tuệ Vũ Trụ',
@@ -89,7 +64,7 @@ export default function HomePage() {
           </h1>
           
           <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto animate-slide-up">
-            Khám phá chiều sâu sâu sắc của Kinh Dịch, Gematria và Tarot thông qua các công cụ tương tác và hướng dẫn toàn diện. 
+            Khám phá chiều sâu sâu sắc của Kinh Dịch và Thần Số Học thông qua các công cụ tương tác và hướng dẫn toàn diện. 
             Hành trình vào các truyền thống bí truyền đã hướng dẫn những người tìm kiếm trong hàng thiên niên kỷ.
           </p>
           
@@ -117,7 +92,7 @@ export default function HomePage() {
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             {features.map((feature, index) => (
               <Card key={feature.title} className="moonrise-card group hover:scale-105 transition-all duration-300">
                 <CardHeader>
@@ -159,7 +134,7 @@ export default function HomePage() {
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             {traditions.map((tradition, index) => (
               <div key={tradition.title} className="text-center group">
                 <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full mb-6 group-hover:scale-110 transition-transform duration-300">
@@ -193,7 +168,7 @@ export default function HomePage() {
             <CardContent>
               <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
                 <Button size="lg" className="moonrise-button text-lg px-8 py-3">
-                  <Zap className="w-5 h-5 mr-2" />
+                  <Eye className="w-5 h-5 mr-2" />
                   Bắt Đầu Hành Trình Miễn Phí
                 </Button>
                 <Button variant="outline" size="lg" className="text-lg px-8 py-3 border-white/30 hover:border-blue-500 hover:bg-white/10">
