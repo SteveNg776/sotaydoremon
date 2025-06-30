@@ -176,7 +176,7 @@ export function DateHandbook() {
       {/* Compact Date Selection - Above the fold priority */}
       <Card className="moonrise-card">
         <CardContent className="p-4">
-          <div className="flex flex-col sm:flex-row items-center space-y-3 sm:space-y-0 sm:space-x-4">
+          <div className="flex flex-col sm:flex-row items-center space-y-3 sm:space-y-0 sm:space-x-2">
             <input
               type="date"
               value={currentDate.toISOString().split('T')[0]}
