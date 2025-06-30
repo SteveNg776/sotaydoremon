@@ -173,19 +173,19 @@ export function DateHandbook() {
         </Alert>
       )}
 
-      {/* Date Selection */}
+      {/* Compact Date Selection - Above the fold priority */}
       <Card className="moonrise-card">
-        <CardContent className="p-6">
-          <div className="flex items-center space-x-4">
+        <CardContent className="p-4">
+          <div className="flex flex-col sm:flex-row items-center space-y-3 sm:space-y-0 sm:space-x-4">
             <input
               type="date"
               value={currentDate.toISOString().split('T')[0]}
               onChange={handleDateChange}
-              className="flex-1 px-4 py-3 bg-white/50 border border-white/20 rounded-lg focus:border-blue-500 focus:outline-none text-lg"
+              className="flex-1 w-full px-3 py-2 bg-white/50 border border-white/20 rounded-lg focus:border-blue-500 focus:outline-none"
             />
             <Button
               onClick={handleTodayClick}
-              className="px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-lg font-medium text-lg"
+              className="w-full sm:w-auto px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg font-medium"
             >
               Hôm Nay
             </Button>
@@ -193,38 +193,33 @@ export function DateHandbook() {
         </CardContent>
       </Card>
 
-      {/* Date Information Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      {/* Streamlined Date Information Grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {/* Solar Calendar Info */}
         <Card className="moonrise-card">
-          <CardHeader>
-            <CardTitle className="flex items-center space-x-2 text-blue-400">
+          <CardHeader className="pb-3">
+            <CardTitle className="flex items-center space-x-2 text-blue-400 text-lg">
               <Calendar className="w-5 h-5" />
-              <span>{t('dateCalculator.solarCalendar')}</span>
+              <span>Dương Lịch</span>
             </CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
-                <div className="text-center p-3 bg-white/50 rounded-lg border border-white/20">
-                  <div className="text-sm text-gray-600">{t('dateCalculator.dayOfYear')}</div>
-                  <div className="text-2xl font-bold text-blue-400">{dateInfo.dayOfYear}</div>
-                </div>
-                <div className="text-center p-3 bg-white/50 rounded-lg border border-white/20">
-                  <div className="text-sm text-gray-600">{t('dateCalculator.daysRemaining')}</div>
-                  <div className="text-2xl font-bold text-blue-400">{dateInfo.daysRemaining}</div>
-                </div>
+          <CardContent className="pt-0">
+            <div className="grid grid-cols-2 gap-3">
+              <div className="text-center p-3 bg-white/50 rounded-lg border border-white/20">
+                <div className="text-xs text-gray-600 mb-1">Ngày thứ</div>
+                <div className="text-xl font-bold text-blue-400">{dateInfo.dayOfYear}</div>
               </div>
-              
-              <div className="grid grid-cols-2 gap-4">
-                <div className="text-center p-3 bg-white/50 rounded-lg border border-white/20">
-                  <div className="text-sm text-gray-600">{t('dateCalculator.weekNumber')}</div>
-                  <div className="text-2xl font-bold text-blue-400">{dateInfo.weekNumber}</div>
-                </div>
-                <div className="text-center p-3 bg-white/50 rounded-lg border border-white/20">
-                  <div className="text-sm text-gray-600">{t('dateCalculator.yearProgress')}</div>
-                  <div className="text-2xl font-bold text-blue-400">{dateInfo.yearProgress}%</div>
-                </div>
+              <div className="text-center p-3 bg-white/50 rounded-lg border border-white/20">
+                <div className="text-xs text-gray-600 mb-1">Còn lại</div>
+                <div className="text-xl font-bold text-blue-400">{dateInfo.daysRemaining}</div>
+              </div>
+              <div className="text-center p-3 bg-white/50 rounded-lg border border-white/20">
+                <div className="text-xs text-gray-600 mb-1">Tuần</div>
+                <div className="text-xl font-bold text-blue-400">{dateInfo.weekNumber}</div>
+              </div>
+              <div className="text-center p-3 bg-white/50 rounded-lg border border-white/20">
+                <div className="text-xs text-gray-600 mb-1">% năm</div>
+                <div className="text-xl font-bold text-blue-400">{dateInfo.yearProgress}%</div>
               </div>
             </div>
           </CardContent>
@@ -232,38 +227,27 @@ export function DateHandbook() {
 
         {/* Lunar Calendar Info */}
         <Card className="moonrise-card">
-          <CardHeader>
-            <CardTitle className="flex items-center space-x-2 text-green-400">
+          <CardHeader className="pb-3">
+            <CardTitle className="flex items-center space-x-2 text-green-400 text-lg">
               <Clock className="w-5 h-5" />
-              <span>{t('dateCalculator.lunarCalendar')}</span>
+              <span>Âm Lịch</span>
             </CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
+          <CardContent className="pt-0">
+            <div className="space-y-3">
               <div className="p-3 bg-white/50 rounded-lg border border-white/20">
-                <div className="text-sm text-gray-600">{t('dateCalculator.lunarDate')}</div>
-                <div className="text-lg font-semibold text-green-400">{dateInfo.lunarDate}</div>
+                <div className="text-xs text-gray-600 mb-1">Ngày âm lịch</div>
+                <div className="text-sm font-semibold text-green-400">{dateInfo.lunarDate}</div>
               </div>
               
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-2 gap-3">
                 <div className="text-center p-3 bg-white/50 rounded-lg border border-white/20">
-                  <div className="text-sm text-gray-600">{t('dateCalculator.lunarDayOfYear')}</div>
-                  <div className="text-2xl font-bold text-green-400">{dateInfo.lunarDayOfYear}</div>
+                  <div className="text-xs text-gray-600 mb-1">Ngày thứ</div>
+                  <div className="text-xl font-bold text-green-400">{dateInfo.lunarDayOfYear}</div>
                 </div>
                 <div className="text-center p-3 bg-white/50 rounded-lg border border-white/20">
-                  <div className="text-sm text-gray-600">{t('dateCalculator.lunarDaysRemaining')}</div>
-                  <div className="text-2xl font-bold text-green-400">{dateInfo.lunarDaysRemaining}</div>
-                </div>
-              </div>
-              
-              <div className="grid grid-cols-2 gap-4">
-                <div className="text-center p-3 bg-white/50 rounded-lg border border-white/20">
-                  <div className="text-sm text-gray-600">Số tuần âm lịch</div>
-                  <div className="text-2xl font-bold text-green-400">{dateInfo.lunarWeekNumber}</div>
-                </div>
-                <div className="text-center p-3 bg-white/50 rounded-lg border border-white/20">
-                  <div className="text-sm text-gray-600">% năm âm lịch</div>
-                  <div className="text-2xl font-bold text-green-400">{dateInfo.lunarYearProgress}%</div>
+                  <div className="text-xs text-gray-600 mb-1">% năm</div>
+                  <div className="text-xl font-bold text-green-400">{dateInfo.lunarYearProgress}%</div>
                 </div>
               </div>
             </div>
@@ -271,65 +255,28 @@ export function DateHandbook() {
         </Card>
       </div>
 
-      {/* Additional Insights */}
+      {/* Insight Exploration - Prominent CTA */}
       <Card className="moonrise-card">
-        <CardHeader>
-          <CardTitle className="flex items-center space-x-2 text-blue-600">
-            <TrendingUp className="w-5 h-5" />
-            <span>{t('dateCalculator.discoverMore')}</span>
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-            <div className="text-center p-4 bg-gradient-to-br from-blue-500/10 to-blue-600/5 rounded-lg border border-blue-500/20">
-              <Badge variant="secondary" className="mb-2 bg-blue-500/10 text-blue-400">
-                {t('dateCalculator.solarCalendar')}
-              </Badge>
-              <div className="text-sm text-gray-600">
-                Ngày thứ {dateInfo.dayOfYear} trong năm {currentDate.getFullYear()}
-              </div>
-            </div>
-            
-            <div className="text-center p-4 bg-gradient-to-br from-green-500/10 to-green-600/5 rounded-lg border border-green-500/20">
-              <Badge variant="secondary" className="mb-2 bg-green-500/10 text-green-400">
-                {t('dateCalculator.lunarCalendar')}
-              </Badge>
-              <div className="text-sm text-gray-600">
-                Ngày thứ {dateInfo.lunarDayOfYear} âm lịch
-              </div>
-            </div>
-            
-            <div className="text-center p-4 bg-gradient-to-br from-blue-600/10 to-purple-600/5 rounded-lg border border-blue-600/20">
-              <Badge variant="secondary" className="mb-2 bg-blue-600/10 text-blue-600">
-                Dương Lịch
-              </Badge>
-              <div className="text-sm text-gray-600">
-                {dateInfo.yearProgress}% của năm đã trôi qua
-              </div>
-            </div>
-            
-            <div className="text-center p-4 bg-gradient-to-br from-green-600/10 to-emerald-600/5 rounded-lg border border-green-600/20">
-              <Badge variant="secondary" className="mb-2 bg-green-600/10 text-green-600">
-                Âm Lịch
-              </Badge>
-              <div className="text-sm text-gray-600">
-                {dateInfo.lunarYearProgress}% năm âm lịch đã trôi qua
-              </div>
-            </div>
+        <CardContent className="p-6 text-center">
+          <div className="mb-4">
+            <Star className="w-8 h-8 text-blue-400 mx-auto mb-2" />
+            <h3 className="text-lg font-semibold text-gray-800 mb-2">
+              Khám phá ý nghĩa sâu sắc
+            </h3>
+            <p className="text-gray-600 text-sm">
+              Tìm hiểu thêm về thần số học và ý nghĩa tâm linh của ngày này
+            </p>
           </div>
-
-          {/* Explore Insight Button */}
-          <div className="text-center">
-            <Button
-              onClick={handleExploreInsight}
-              className="moonrise-button"
-              size="lg"
-              disabled={!!dateError}
-            >
-              <Sparkles className="w-5 h-5 mr-2" />
-              Khám phá ý nghĩa ngày này
-            </Button>
-          </div>
+          
+          <Button
+            onClick={handleExploreInsight}
+            className="moonrise-button"
+            size="lg"
+            disabled={!!dateError}
+          >
+            <Sparkles className="w-5 h-5 mr-2" />
+            Khám phá ngay
+          </Button>
         </CardContent>
       </Card>
 
