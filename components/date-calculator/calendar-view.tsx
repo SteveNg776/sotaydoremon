@@ -399,29 +399,6 @@ export function CalendarView() {
                 <span>Ngày âm lịch</span>
               </div>
             </div>
-
-            {/* Holiday type indicators */}
-            <div className="pt-3 border-t border-gray-200">
-              <h5 className="font-medium text-gray-700 mb-2">Loại Ngày Lễ:</h5>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 text-sm">
-                <div className="flex items-center space-x-2">
-                  <div className="w-4 h-4 bg-white border-2 border-red-500 rounded"></div>
-                  <span>Lễ chính thức</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <div className="w-4 h-4 bg-white border-2 border-green-500 rounded"></div>
-                  <span>Lễ truyền thống</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <div className="w-4 h-4 bg-white border-2 border-blue-500 rounded"></div>
-                  <span>Lễ quốc tế</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <div className="w-4 h-4 bg-white border-2 border-purple-500 rounded"></div>
-                  <span>Sự kiện văn hóa</span>
-                </div>
-              </div>
-            </div>
           </div>
         </CardContent>
       </Card>
