@@ -9,6 +9,7 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { ChevronLeft, ChevronRight, Calendar, AlertCircle, Info } from 'lucide-react';
 import { useLanguage } from '@/contexts/language-context';
 import { getMonthCalendar, getLunarDateInfo, formatDate } from '@/lib/lunar-calendar-utils';
+import { Holiday, HOLIDAY_TYPE_COLORS, HOLIDAY_TYPE_NAMES } from '@/lib/holidays-data';
 
 export function CalendarView() {
   const { t } = useLanguage();
@@ -104,13 +105,44 @@ export function CalendarView() {
     }
   };
 
-  const getDateFestivals = (date: Date) => {
+  const getDateFestivals = (date: Date): Holiday[] => {
     try {
       const lunarInfo = getLunarDateInfo(date);
       return lunarInfo.festivals;
     } catch (error) {
       return [];
     }
+  };
+
+  const getHolidayDisplayText = (holidays: Holiday[]): string => {
+    if (holidays.length === 0) return '';
+    const firstHoliday = holidays[0];
+    return firstHoliday.name.length > 12 ? firstHoliday.name.substring(0, 12) + '...' : firstHoliday.name;
+  };
+
+  const getHolidayTooltip = (holidays: Holiday[]): string => {
+    if (holidays.length === 0) return '';
+    return holidays.map(h => `${HOLIDAY_TYPE_NAMES[h.type]}: ${h.name}`).join('\n');
+  };
+
+  const getHolidayBorderColor = (holidays: Holiday[]): string => {
+    if (holidays.length === 0) return '';
+    
+    // Priority: official > traditional > international > cultural
+    const priorityOrder: Holiday['type'][] = ['official', 'traditional', 'international', 'cultural'];
+    
+    for (const type of priorityOrder) {
+      if (holidays.some(h => h.type === type)) {
+        switch (type) {
+          case 'official': return 'ring-2 ring-red-500';
+          case 'traditional': return 'ring-2 ring-green-500';
+          case 'international': return 'ring-2 ring-blue-500';
+          case 'cultural': return 'ring-2 ring-purple-500';
+          default: return '';
+        }
+      }
+    }
+    return '';
   };
 
   return (
@@ -186,7 +218,7 @@ export function CalendarView() {
         </CardHeader>
         
         <CardContent>
-          <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
+          <div className="bg-white rounded-lg border border-gray-200 overflow-hidden shadow-sm">
             {/* Day Headers - Style similar to 24h.com.vn */}
             <div className="grid grid-cols-7 bg-green-600">
               {dayNames.map((day, index) => (
@@ -211,47 +243,58 @@ export function CalendarView() {
                       const isTodayDate = isToday(date);
                       const isSelectedDate = isSelected(date);
                       const isWeekendDate = isWeekend(date);
+                      const holidayBorderColor = getHolidayBorderColor(festivals);
                       
                       return (
                         <button
                           key={dayIndex}
                           onClick={() => handleDateSelect(date)}
                           className={`
-                            relative min-h-[80px] p-2 text-left transition-all duration-200 hover:bg-blue-50 border-r border-gray-200 last:border-r-0
+                            relative min-h-[85px] p-2 text-left transition-all duration-200 hover:bg-blue-50 border-r border-gray-200 last:border-r-0
                             ${!isCurrentMonthDate ? 'bg-gray-50' : 'bg-white'}
-                            ${isTodayDate ? 'bg-yellow-100 ring-2 ring-yellow-400' : ''}
-                            ${isSelectedDate ? 'bg-blue-100 ring-2 ring-blue-400' : ''}
-                            ${hasFestival && isCurrentMonthDate ? 'ring-2 ring-red-500' : ''}
+                            ${isTodayDate ? 'bg-yellow-100' : ''}
+                            ${isSelectedDate ? 'bg-blue-100' : ''}
+                            ${holidayBorderColor}
                           `}
-                          title={hasFestival ? `Lễ hội: ${festivals.join(', ')}` : ''}
+                          title={getHolidayTooltip(festivals)}
                         >
-                          <div className="flex flex-col h-full">
-                            {/* Solar date */}
-                            <div className={`text-lg font-bold mb-1 ${
-                              !isCurrentMonthDate ? 'text-gray-400' : 
-                              isWeekendDate ? 'text-red-600' : 
-                              'text-gray-800'
-                            }`}>
-                              {date.getDate()}
+                          <div className="flex flex-col h-full justify-between">
+                            {/* Top section: Solar date and lunar date */}
+                            <div>
+                              {/* Solar date */}
+                              <div className={`text-lg font-bold mb-1 ${
+                                !isCurrentMonthDate ? 'text-gray-400' : 
+                                isWeekendDate ? 'text-red-600' : 
+                                'text-gray-800'
+                              }`}>
+                                {date.getDate()}
+                              </div>
+                              
+                              {/* Lunar date */}
+                              {isCurrentMonthDate && lunarDay && (
+                                <div className="text-xs text-green-600 font-medium">
+                                  {lunarDay}
+                                </div>
+                              )}
                             </div>
                             
-                            {/* Lunar date */}
-                            {isCurrentMonthDate && lunarDay && (
-                              <div className="text-xs text-green-600 font-medium mb-1">
-                                {lunarDay}
-                              </div>
-                            )}
-                            
-                            {/* Festival indicator */}
+                            {/* Bottom section: Festival/Holiday */}
                             {hasFestival && isCurrentMonthDate && (
-                              <div className="text-xs text-red-600 font-medium leading-tight">
-                                {festivals[0].length > 10 ? festivals[0].substring(0, 10) + '...' : festivals[0]}
+                              <div className="mt-1">
+                                <div className="text-xs text-red-600 font-medium leading-tight">
+                                  {getHolidayDisplayText(festivals)}
+                                </div>
                               </div>
                             )}
                             
                             {/* Today indicator */}
                             {isTodayDate && (
                               <div className="absolute top-1 right-1 w-2 h-2 bg-yellow-500 rounded-full"></div>
+                            )}
+                            
+                            {/* Selected indicator */}
+                            {isSelectedDate && (
+                              <div className="absolute top-1 left-1 w-2 h-2 bg-blue-500 rounded-full"></div>
                             )}
                           </div>
                         </button>
@@ -280,28 +323,52 @@ export function CalendarView() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="p-4 bg-blue-50 rounded-lg border border-blue-200">
-                <h4 className="font-semibold text-blue-700 mb-2">Dương Lịch</h4>
-                <p className="text-blue-600 text-lg font-medium">{formatDate(selectedDate, 'vi')}</p>
-                <p className="text-sm text-gray-600 mt-1">
-                  {selectedDate.toLocaleDateString('vi-VN', { weekday: 'long' })}
-                </p>
+            <div className="space-y-4">
+              {/* Date Information */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="p-4 bg-blue-50 rounded-lg border border-blue-200">
+                  <h4 className="font-semibold text-blue-700 mb-2">Dương Lịch</h4>
+                  <p className="text-blue-600 text-lg font-medium">{formatDate(selectedDate, 'vi')}</p>
+                  <p className="text-sm text-gray-600 mt-1">
+                    {selectedDate.toLocaleDateString('vi-VN', { weekday: 'long' })}
+                  </p>
+                </div>
+                
+                <div className="p-4 bg-green-50 rounded-lg border border-green-200">
+                  <h4 className="font-semibold text-green-700 mb-2">Âm Lịch</h4>
+                  <p className="text-green-600 text-lg font-medium">{getLunarDateInfo(selectedDate).lunarDate}</p>
+                </div>
               </div>
-              
-              <div className="p-4 bg-green-50 rounded-lg border border-green-200">
-                <h4 className="font-semibold text-green-700 mb-2">Âm Lịch</h4>
-                <p className="text-green-600 text-lg font-medium">{getLunarDateInfo(selectedDate).lunarDate}</p>
-                {getDateFestivals(selectedDate).length > 0 && (
-                  <div className="mt-2">
-                    {getDateFestivals(selectedDate).map((festival, index) => (
-                      <Badge key={index} variant="secondary" className="mr-1 mb-1 bg-red-100 text-red-700 text-xs">
-                        {festival}
-                      </Badge>
+
+              {/* Holidays and Festivals */}
+              {getDateFestivals(selectedDate).length > 0 && (
+                <div className="p-4 bg-gradient-to-r from-red-50 to-orange-50 rounded-lg border border-red-200">
+                  <h4 className="font-semibold text-red-700 mb-3">Ngày Lễ & Lễ Hội</h4>
+                  <div className="space-y-3">
+                    {getDateFestivals(selectedDate).map((holiday, index) => (
+                      <div key={index} className="bg-white p-3 rounded-lg border border-red-100">
+                        <div className="flex items-start justify-between mb-2">
+                          <h5 className="font-medium text-gray-800">{holiday.name}</h5>
+                          <Badge 
+                            variant="secondary" 
+                            className={`text-xs ${HOLIDAY_TYPE_COLORS[holiday.type]}`}
+                          >
+                            {HOLIDAY_TYPE_NAMES[holiday.type]}
+                          </Badge>
+                        </div>
+                        <p className="text-sm text-gray-600 leading-relaxed">{holiday.description}</p>
+                        {holiday.country && (
+                          <div className="mt-2">
+                            <Badge variant="outline" className="text-xs">
+                              {holiday.country === 'VN' ? 'Việt Nam' : holiday.country}
+                            </Badge>
+                          </div>
+                        )}
+                      </div>
                     ))}
                   </div>
-                )}
-              </div>
+                </div>
+              )}
             </div>
           </CardContent>
         </Card>
@@ -311,35 +378,51 @@ export function CalendarView() {
       <Card className="moonrise-card">
         <CardContent className="p-4">
           <h4 className="font-semibold text-gray-700 mb-3">Chú Thích</h4>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-sm">
-            <div className="flex items-center space-x-2">
-              <div className="w-4 h-4 bg-yellow-100 border-2 border-yellow-400 rounded flex items-center justify-center">
-                <div className="w-1 h-1 bg-yellow-500 rounded-full"></div>
+          <div className="space-y-4">
+            {/* Basic indicators */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-sm">
+              <div className="flex items-center space-x-2">
+                <div className="w-4 h-4 bg-yellow-100 rounded flex items-center justify-center relative">
+                  <div className="w-1 h-1 bg-yellow-500 rounded-full absolute top-0.5 right-0.5"></div>
+                </div>
+                <span>Hôm nay</span>
               </div>
-              <span>Hôm nay</span>
-            </div>
-            <div className="flex items-center space-x-2">
-              <div className="w-4 h-4 bg-blue-100 border-2 border-blue-400 rounded"></div>
-              <span>Ngày đã chọn</span>
-            </div>
-            <div className="flex items-center space-x-2">
-              <div className="w-4 h-4 bg-white border-2 border-red-500 rounded"></div>
-              <span>Có lễ hội</span>
-            </div>
-            <div className="flex items-center space-x-2">
-              <div className="w-2 h-2 bg-green-600 rounded-full"></div>
-              <span>Ngày âm lịch</span>
-            </div>
-          </div>
-          <div className="mt-3 pt-3 border-t border-gray-200">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+              <div className="flex items-center space-x-2">
+                <div className="w-4 h-4 bg-blue-100 rounded relative">
+                  <div className="w-1 h-1 bg-blue-500 rounded-full absolute top-0.5 left-0.5"></div>
+                </div>
+                <span>Ngày đã chọn</span>
+              </div>
               <div className="flex items-center space-x-2">
                 <span className="text-red-600 font-bold">●</span>
-                <span>Ngày cuối tuần (T7, CN)</span>
+                <span>Ngày cuối tuần</span>
               </div>
               <div className="flex items-center space-x-2">
-                <span className="text-gray-400 font-bold">●</span>
-                <span>Ngày ngoài tháng hiện tại</span>
+                <span className="text-green-600 font-bold text-xs">15</span>
+                <span>Ngày âm lịch</span>
+              </div>
+            </div>
+
+            {/* Holiday type indicators */}
+            <div className="pt-3 border-t border-gray-200">
+              <h5 className="font-medium text-gray-700 mb-2">Loại Ngày Lễ:</h5>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 text-sm">
+                <div className="flex items-center space-x-2">
+                  <div className="w-4 h-4 bg-white border-2 border-red-500 rounded"></div>
+                  <span>Lễ chính thức</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <div className="w-4 h-4 bg-white border-2 border-green-500 rounded"></div>
+                  <span>Lễ truyền thống</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <div className="w-4 h-4 bg-white border-2 border-blue-500 rounded"></div>
+                  <span>Lễ quốc tế</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <div className="w-4 h-4 bg-white border-2 border-purple-500 rounded"></div>
+                  <span>Sự kiện văn hóa</span>
+                </div>
               </div>
             </div>
           </div>

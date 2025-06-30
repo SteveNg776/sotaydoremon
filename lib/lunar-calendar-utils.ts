@@ -1,4 +1,5 @@
 import { Lunar, Solar } from 'lunar-javascript';
+import { Holiday, HOLIDAYS_DATA, getHolidaysForDate } from './holidays-data';
 
 export interface DateInfo {
   solarDate: Date;
@@ -23,7 +24,7 @@ export interface DateInfo {
   lunarDaysRemaining: number;
   lunarWeekNumber: number;
   lunarYearProgress: number;
-  festivals: string[];
+  festivals: Holiday[];
   solarTerms: string[];
   zodiacAnimal: string;
   constellation: string;
@@ -141,6 +142,18 @@ function calculateLunarDate(date: Date): {
   }
 }
 
+// Convert lunar date to solar date for a specific year
+function lunarToSolarForYear(year: number, lunarMonth: number, lunarDay: number): Date | null {
+  try {
+    const lunar = Lunar.fromYmd(year, lunarMonth, lunarDay);
+    const solar = lunar.getSolar();
+    return solar.toDate();
+  } catch (error) {
+    console.error('Error converting lunar to solar:', error);
+    return null;
+  }
+}
+
 export function getDayOfYear(date: Date): number {
   try {
     const start = new Date(date.getFullYear(), 0, 0);
@@ -209,7 +222,7 @@ export function getLunarDateInfo(date: Date): {
   daysRemaining: number;
   weekNumber: number;
   yearProgress: number;
-  festivals: string[];
+  festivals: Holiday[];
   solarTerms: string[];
   zodiacAnimal: string;
   constellation: string;
@@ -273,17 +286,25 @@ export function getLunarDateInfo(date: Date): {
     const yearProgress = Math.round((lunarData.dayOfYear / lunarData.totalDaysInYear) * 100 * 100) / 100;
     
     // Get festivals and solar terms with safe method calls
-    let festivals: string[] = [];
+    let traditionalFestivals: Holiday[] = [];
     let solarTerms: string[] = [];
     
     try {
       if (typeof lunar.getFestivals === 'function') {
         const lunarFestivals = lunar.getFestivals() || [];
-        festivals = lunarFestivals.map((f: any) => {
-          if (typeof f === 'string') return f;
-          if (f && typeof f.getName === 'function') return f.getName();
-          if (f && f.toString) return f.toString();
-          return 'Lễ hội';
+        traditionalFestivals = lunarFestivals.map((f: any) => {
+          const festivalName = typeof f === 'string' ? f : 
+                              (f && typeof f.getName === 'function') ? f.getName() : 
+                              (f && f.toString) ? f.toString() : 'Lễ hội';
+          
+          return {
+            id: `traditional-${festivalName.toLowerCase().replace(/\s+/g, '-')}`,
+            name: festivalName,
+            type: 'traditional' as const,
+            description: `Lễ hội truyền thống: ${festivalName}`,
+            isRecurring: true,
+            country: 'VN'
+          };
         }).filter(Boolean);
       }
       
@@ -299,6 +320,23 @@ export function getLunarDateInfo(date: Date): {
     } catch (error) {
       console.warn('Error getting festivals and solar terms:', error);
     }
+    
+    // Get holidays from our custom data
+    const customHolidays = getHolidaysForDate(date);
+    
+    // Get lunar holidays for this date
+    const year = date.getFullYear();
+    const lunarHolidays = HOLIDAYS_DATA.filter(holiday => {
+      if (!holiday.lunarDate) return false;
+      
+      const solarDate = lunarToSolarForYear(year, holiday.lunarDate.month, holiday.lunarDate.day);
+      if (!solarDate) return false;
+      
+      return solarDate.toDateString() === date.toDateString();
+    });
+    
+    // Combine all festivals
+    const allFestivals = [...traditionalFestivals, ...customHolidays, ...lunarHolidays];
     
     return {
       lunarDate,
@@ -318,7 +356,7 @@ export function getLunarDateInfo(date: Date): {
       daysRemaining,
       weekNumber,
       yearProgress,
-      festivals,
+      festivals: allFestivals,
       solarTerms,
       zodiacAnimal,
       constellation
