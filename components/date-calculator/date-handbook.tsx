@@ -173,25 +173,24 @@ export function DateHandbook() {
         </Alert>
       )}
 
-      {/* Compact Date Selection - Above the fold priority */}
-      <Card className="moonrise-card">
-        <CardContent className="p-4">
-          <div className="flex flex-col sm:flex-row items-center space-y-3 sm:space-y-0 sm:space-x-2">
-            <input
-              type="date"
-              value={currentDate.toISOString().split('T')[0]}
-              onChange={handleDateChange}
-              className="flex-1 w-full px-3 py-2 bg-white/50 border border-white/20 rounded-lg focus:border-blue-500 focus:outline-none"
-            />
-            <Button
-              onClick={handleTodayClick}
-              className="w-full sm:w-auto px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg font-medium"
-            >
-              Hôm Nay
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
+      {/* Enhanced Date Selection - Matching Reference Design */}
+      <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8">
+        <div className="relative">
+          <input
+            type="date"
+            value={currentDate.toISOString().split('T')[0]}
+            onChange={handleDateChange}
+            className="w-full sm:w-auto px-4 py-3 text-lg font-medium bg-white border-2 border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 hover:border-gray-400"
+            style={{ minWidth: '200px' }}
+          />
+        </div>
+        <Button
+          onClick={handleTodayClick}
+          className="px-6 py-3 text-lg font-semibold bg-blue-600 hover:bg-blue-700 text-white rounded-lg shadow-md hover:shadow-lg transition-all duration-200 transform hover:scale-105"
+        >
+          Hôm Nay
+        </Button>
+      </div>
 
       {/* Parallel Calendar Display - Solar and Lunar */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
