@@ -20,7 +20,7 @@ export default function HomePage() {
   const features = [
     {
       icon: BookOpen,
-      title: 'Kinh Dịch Oracle',
+      title: 'Kinh Dịch',
       description: 'Tham khảo Kinh Dịch cổ đại của Trung Quốc với trình tạo quẻ tương tác và giải thích toàn diện.',
       href: '/i-ching',
       badge: 'Trí Tuệ Cổ Đại',

@@ -6,17 +6,18 @@ import { Footer } from '@/components/layout/footer';
 import { ThemeProvider } from '@/components/providers/theme-provider';
 import { LanguageProvider } from '@/contexts/language-context';
 import { Toaster } from '@/components/ui/sonner';
+import { SpeedInsights } from '@vercel/speed-insights/next'; // 1. Import component
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
 export const metadata: Metadata = {
-  title: 'Mystic Studies - Ancient Wisdom & Esoteric Knowledge',
-  description: 'Explore the mysteries of I Ching and Numerology through interactive tools and comprehensive guidance.',
-  keywords: 'I Ching, numerology, lunar calendar, ancient wisdom, divination, mysticism, spirituality',
-  authors: [{ name: 'Mystic Studies' }],
+  title: 'Nghiên Cứu Huyền Học - Trí Tuệ Cổ Xưa & Tri Thức Nội Môn',
+  description: 'Khám phá những bí ẩn của Kinh Dịch và Thần Số Học thông qua các công cụ tương tác và hướng dẫn toàn diện.',
+  keywords: 'Kinh Dịch, thần số học, âm lịch, trí tuệ cổ xưa, bói toán, huyền học, tâm linh',
+  authors: [{ name: 'Nghiên Cứu Huyền Học' }],
   openGraph: {
-    title: 'Mystic Studies - Ancient Wisdom & Esoteric Knowledge',
-    description: 'Explore the mysteries of I Ching and Numerology through interactive tools.',
+    title: 'Nghiên Cứu Huyền Học - Trí Tuệ Cổ Xưa & Tri Thức Nội Môn',
+    description: 'Khám phá bí ẩn của Kinh Dịch và Thần Số Học qua các công cụ tương tác.',
     type: 'website',
   },
 };
@@ -46,6 +47,7 @@ export default function RootLayout({
             <Toaster />
           </LanguageProvider>
         </ThemeProvider>
+        <SpeedInsights /> {/* 2. Thêm component vào cuối body */}
       </body>
     </html>
   );
