@@ -95,11 +95,8 @@ export function CalendarView() {
       const lunarDay = lunarInfo.lunarDateDetailed.day;
       const lunarMonth = lunarInfo.lunarDateDetailed.month;
       
-      // Hiển thị "ngày/tháng" nếu là ngày mùng 1, chỉ hiển thị ngày nếu không phải
-      if (lunarDay === 1) {
-        return `${lunarDay}/${lunarMonth}`;
-      }
-      return lunarDay.toString();
+      // Always return a green dot instead of numbers
+      return '●';
     } catch (error) {
       return '';
     }
@@ -146,7 +143,7 @@ export function CalendarView() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       {/* Error Alert */}
       {calendarError && (
         <Alert variant="destructive">
@@ -157,7 +154,7 @@ export function CalendarView() {
 
       {/* Calendar Card */}
       <Card className="moonrise-card">
-        <CardHeader>
+        <CardHeader className="pb-3">
           <div className="flex items-center justify-between">
             <CardTitle className="flex items-center space-x-2 text-blue-600">
               <Calendar className="w-5 h-5" />
@@ -166,7 +163,7 @@ export function CalendarView() {
             
             <div className="flex items-center space-x-2">
               <Select value={currentMonth.toString()} onValueChange={(value) => setCurrentMonth(parseInt(value))}>
-                <SelectTrigger className="w-32 bg-white/50 border-white/20">
+                <SelectTrigger className="w-28 bg-white/50 border-white/20">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -179,7 +176,7 @@ export function CalendarView() {
               </Select>
               
               <Select value={currentYear.toString()} onValueChange={(value) => setCurrentYear(parseInt(value))}>
-                <SelectTrigger className="w-24 bg-white/50 border-white/20">
+                <SelectTrigger className="w-20 bg-white/50 border-white/20">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -217,12 +214,12 @@ export function CalendarView() {
           </div>
         </CardHeader>
         
-        <CardContent>
+        <CardContent className="pt-0">
           <div className="bg-white rounded-lg border border-gray-200 overflow-hidden shadow-sm">
             {/* Day Headers - Style similar to 24h.com.vn */}
             <div className="grid grid-cols-7 bg-green-600">
               {dayNames.map((day, index) => (
-                <div key={day} className={`text-center text-sm font-bold py-3 px-2 text-white border-r border-green-500 last:border-r-0 ${
+                <div key={day} className={`text-center text-sm font-bold py-2 px-2 text-white border-r border-green-500 last:border-r-0 ${
                   index === 6 ? 'text-red-200' : '' // Highlight Sunday
                 }`}>
                   {day}
@@ -250,7 +247,7 @@ export function CalendarView() {
                           key={dayIndex}
                           onClick={() => handleDateSelect(date)}
                           className={`
-                            relative min-h-[85px] p-2 text-left transition-all duration-200 hover:bg-blue-50 border-r border-gray-200 last:border-r-0
+                            relative min-h-[70px] p-2 text-left transition-all duration-200 hover:bg-blue-50 border-r border-gray-200 last:border-r-0
                             ${!isCurrentMonthDate ? 'bg-gray-50' : 'bg-white'}
                             ${isTodayDate ? 'bg-yellow-100' : ''}
                             ${isSelectedDate ? 'bg-blue-100' : ''}
@@ -270,9 +267,9 @@ export function CalendarView() {
                                 {date.getDate()}
                               </div>
                               
-                              {/* Lunar date */}
+                              {/* Lunar date - now showing green dot */}
                               {isCurrentMonthDate && lunarDay && (
-                                <div className="text-xs text-green-600 font-medium">
+                                <div className="text-xs text-green-600 font-bold">
                                   {lunarDay}
                                 </div>
                               )}
@@ -316,13 +313,13 @@ export function CalendarView() {
       {/* Selected Date Information */}
       {selectedDate && (
         <Card className="moonrise-card">
-          <CardHeader>
+          <CardHeader className="pb-3">
             <CardTitle className="flex items-center space-x-2 text-purple-600">
               <Info className="w-5 h-5" />
               <span>Thông Tin Ngày Đã Chọn</span>
             </CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="pt-0">
             <div className="space-y-4">
               {/* Date Information */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -374,56 +371,30 @@ export function CalendarView() {
         </Card>
       )}
 
-      {/* Legend */}
+      {/* Simplified Legend */}
       <Card className="moonrise-card">
         <CardContent className="p-4">
           <h4 className="font-semibold text-gray-700 mb-3">Chú Thích</h4>
-          <div className="space-y-4">
-            {/* Basic indicators */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-sm">
-              <div className="flex items-center space-x-2">
-                <div className="w-4 h-4 bg-yellow-100 rounded flex items-center justify-center relative">
-                  <div className="w-1 h-1 bg-yellow-500 rounded-full absolute top-0.5 right-0.5"></div>
-                </div>
-                <span>Hôm nay</span>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-sm">
+            <div className="flex items-center space-x-2">
+              <div className="w-4 h-4 bg-yellow-100 rounded flex items-center justify-center relative">
+                <div className="w-1 h-1 bg-yellow-500 rounded-full absolute top-0.5 right-0.5"></div>
               </div>
-              <div className="flex items-center space-x-2">
-                <div className="w-4 h-4 bg-blue-100 rounded relative">
-                  <div className="w-1 h-1 bg-blue-500 rounded-full absolute top-0.5 left-0.5"></div>
-                </div>
-                <span>Ngày đã chọn</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <span className="text-red-600 font-bold">●</span>
-                <span>Ngày cuối tuần</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <span className="text-green-600 font-bold text-xs">15</span>
-                <span>Ngày âm lịch</span>
-              </div>
+              <span>Hôm nay</span>
             </div>
-
-            {/* Holiday type indicators */}
-            <div className="pt-3 border-t border-gray-200">
-              <h5 className="font-medium text-gray-700 mb-2">Loại Ngày Lễ:</h5>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 text-sm">
-                <div className="flex items-center space-x-2">
-                  <div className="w-4 h-4 bg-white border-2 border-red-500 rounded"></div>
-                  <span>Lễ chính thức</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <div className="w-4 h-4 bg-white border-2 border-green-500 rounded"></div>
-                  <span>Lễ truyền thống</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <div className="w-4 h-4 bg-white border-2 border-blue-500 rounded"></div>
-                  <span>Lễ quốc tế</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <div className="w-4 h-4 bg-white border-2 border-purple-500 rounded"></div>
-                  <span>Sự kiện văn hóa</span>
-                </div>
+            <div className="flex items-center space-x-2">
+              <div className="w-4 h-4 bg-blue-100 rounded relative">
+                <div className="w-1 h-1 bg-blue-500 rounded-full absolute top-0.5 left-0.5"></div>
               </div>
+              <span>Ngày đã chọn</span>
+            </div>
+            <div className="flex items-center space-x-2">
+              <span className="text-red-600 font-bold">●</span>
+              <span>Ngày cuối tuần</span>
+            </div>
+            <div className="flex items-center space-x-2">
+              <span className="text-green-600 font-bold text-xs">●</span>
+              <span>Ngày âm lịch</span>
             </div>
           </div>
         </CardContent>

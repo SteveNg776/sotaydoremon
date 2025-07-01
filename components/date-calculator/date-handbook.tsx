@@ -5,7 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Calendar, CalendarDays, Clock, TrendingUp, Sparkles, Star, AlertCircle, CheckCircle } from 'lucide-react';
+import { Calendar, CalendarDays, Clock, TrendingUp, Sparkles, Star, AlertCircle, CheckCircle, Sun, Moon } from 'lucide-react';
 import { useLanguage } from '@/contexts/language-context';
 import { getDateInfo, formatDate, validateSolarDate, type DateInfo } from '@/lib/lunar-calendar-utils';
 import { NumerologyInsightDialog } from './numerology-insight-dialog';
@@ -173,163 +173,251 @@ export function DateHandbook() {
         </Alert>
       )}
 
-      {/* Date Selection */}
-      <Card className="moonrise-card">
-        <CardContent className="p-6">
-          <div className="flex items-center space-x-4">
-            <input
-              type="date"
-              value={currentDate.toISOString().split('T')[0]}
-              onChange={handleDateChange}
-              className="flex-1 px-4 py-3 bg-white/50 border border-white/20 rounded-lg focus:border-blue-500 focus:outline-none text-lg"
-            />
-            <Button
-              onClick={handleTodayClick}
-              className="px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-lg font-medium text-lg"
-            >
-              Hôm Nay
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
+      {/* Enhanced Date Selection - Matching Reference Design */}
+      <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8">
+        <div className="relative">
+          <input
+            type="date"
+            value={currentDate.toISOString().split('T')[0]}
+            onChange={handleDateChange}
+            className="w-full sm:w-auto px-4 py-3 text-lg font-medium bg-white border-2 border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 hover:border-gray-400"
+            style={{ minWidth: '200px' }}
+          />
+        </div>
+        <Button
+          onClick={handleTodayClick}
+          className="px-6 py-3 text-lg font-semibold bg-blue-600 hover:bg-blue-700 text-white rounded-lg shadow-md hover:shadow-lg transition-all duration-200 transform hover:scale-105"
+        >
+          Hôm Nay
+        </Button>
+      </div>
 
-      {/* Date Information Grid */}
+      {/* Parallel Calendar Display - Solar and Lunar */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Solar Calendar Info */}
-        <Card className="moonrise-card">
-          <CardHeader>
-            <CardTitle className="flex items-center space-x-2 text-blue-400">
-              <Calendar className="w-5 h-5" />
-              <span>{t('dateCalculator.solarCalendar')}</span>
+        {/* Solar Calendar Card */}
+        <Card className="moonrise-card border-l-4 border-l-orange-400">
+          <CardHeader className="pb-4">
+            <CardTitle className="flex items-center space-x-3 text-orange-600">
+              <div className="p-2 bg-orange-100 rounded-full">
+                <Sun className="w-6 h-6 text-orange-600" />
+              </div>
+              <div>
+                <div className="text-2xl font-bold">Dương Lịch</div>
+                <div className="text-sm font-normal text-gray-600">Solar Calendar</div>
+              </div>
             </CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
-                <div className="text-center p-3 bg-white/50 rounded-lg border border-white/20">
-                  <div className="text-sm text-gray-600">{t('dateCalculator.dayOfYear')}</div>
-                  <div className="text-2xl font-bold text-blue-400">{dateInfo.dayOfYear}</div>
-                </div>
-                <div className="text-center p-3 bg-white/50 rounded-lg border border-white/20">
-                  <div className="text-sm text-gray-600">{t('dateCalculator.daysRemaining')}</div>
-                  <div className="text-2xl font-bold text-blue-400">{dateInfo.daysRemaining}</div>
-                </div>
+          <CardContent className="space-y-4">
+            {/* Main Date Display */}
+            <div className="text-center p-4 bg-gradient-to-br from-orange-50 to-yellow-50 rounded-xl border border-orange-200">
+              <div className="text-3xl font-bold text-orange-700 mb-2">
+                {formatDate(currentDate, 'vi')}
               </div>
-              
-              <div className="grid grid-cols-2 gap-4">
-                <div className="text-center p-3 bg-white/50 rounded-lg border border-white/20">
-                  <div className="text-sm text-gray-600">{t('dateCalculator.weekNumber')}</div>
-                  <div className="text-2xl font-bold text-blue-400">{dateInfo.weekNumber}</div>
-                </div>
-                <div className="text-center p-3 bg-white/50 rounded-lg border border-white/20">
-                  <div className="text-sm text-gray-600">{t('dateCalculator.yearProgress')}</div>
-                  <div className="text-2xl font-bold text-blue-400">{dateInfo.yearProgress}%</div>
-                </div>
+              <div className="text-lg text-orange-600">
+                {currentDate.toLocaleDateString('vi-VN', { weekday: 'long' })}
+              </div>
+            </div>
+
+            {/* Solar Calendar Statistics */}
+            <div className="grid grid-cols-2 gap-3">
+              <div className="text-center p-3 bg-white/70 rounded-lg border border-orange-200">
+                <div className="text-xs text-gray-600 mb-1">Ngày thứ</div>
+                <div className="text-2xl font-bold text-orange-600">{dateInfo.dayOfYear}</div>
+                <div className="text-xs text-gray-500">trong năm</div>
+              </div>
+              <div className="text-center p-3 bg-white/70 rounded-lg border border-orange-200">
+                <div className="text-xs text-gray-600 mb-1">Còn lại</div>
+                <div className="text-2xl font-bold text-orange-600">{dateInfo.daysRemaining}</div>
+                <div className="text-xs text-gray-500">ngày</div>
+              </div>
+              <div className="text-center p-3 bg-white/70 rounded-lg border border-orange-200">
+                <div className="text-xs text-gray-600 mb-1">Tuần thứ</div>
+                <div className="text-2xl font-bold text-orange-600">{dateInfo.weekNumber}</div>
+                <div className="text-xs text-gray-500">của năm</div>
+              </div>
+              <div className="text-center p-3 bg-white/70 rounded-lg border border-orange-200">
+                <div className="text-xs text-gray-600 mb-1">Tiến độ</div>
+                <div className="text-2xl font-bold text-orange-600">{dateInfo.yearProgress}%</div>
+                <div className="text-xs text-gray-500">năm</div>
+              </div>
+            </div>
+
+            {/* Progress Bar */}
+            <div className="space-y-2">
+              <div className="flex justify-between text-xs text-gray-600">
+                <span>Tiến độ năm {currentDate.getFullYear()}</span>
+                <span>{dateInfo.yearProgress}%</span>
+              </div>
+              <div className="w-full bg-orange-100 rounded-full h-2">
+                <div 
+                  className="bg-gradient-to-r from-orange-400 to-yellow-500 h-2 rounded-full transition-all duration-500"
+                  style={{ width: `${dateInfo.yearProgress}%` }}
+                ></div>
               </div>
             </div>
           </CardContent>
         </Card>
 
-        {/* Lunar Calendar Info */}
-        <Card className="moonrise-card">
-          <CardHeader>
-            <CardTitle className="flex items-center space-x-2 text-green-400">
-              <Clock className="w-5 h-5" />
-              <span>{t('dateCalculator.lunarCalendar')}</span>
+        {/* Lunar Calendar Card */}
+        <Card className="moonrise-card border-l-4 border-l-blue-400">
+          <CardHeader className="pb-4">
+            <CardTitle className="flex items-center space-x-3 text-blue-600">
+              <div className="p-2 bg-blue-100 rounded-full">
+                <Moon className="w-6 h-6 text-blue-600" />
+              </div>
+              <div>
+                <div className="text-2xl font-bold">Âm Lịch</div>
+                <div className="text-sm font-normal text-gray-600">Lunar Calendar</div>
+              </div>
             </CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              <div className="p-3 bg-white/50 rounded-lg border border-white/20">
-                <div className="text-sm text-gray-600">{t('dateCalculator.lunarDate')}</div>
-                <div className="text-lg font-semibold text-green-400">{dateInfo.lunarDate}</div>
+          <CardContent className="space-y-4">
+            {/* Main Lunar Date Display */}
+            <div className="text-center p-4 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl border border-blue-200">
+              <div className="text-lg font-bold text-blue-700 mb-2">
+                {dateInfo.lunarDate}
               </div>
-              
-              <div className="grid grid-cols-2 gap-4">
-                <div className="text-center p-3 bg-white/50 rounded-lg border border-white/20">
-                  <div className="text-sm text-gray-600">{t('dateCalculator.lunarDayOfYear')}</div>
-                  <div className="text-2xl font-bold text-green-400">{dateInfo.lunarDayOfYear}</div>
-                </div>
-                <div className="text-center p-3 bg-white/50 rounded-lg border border-white/20">
-                  <div className="text-sm text-gray-600">{t('dateCalculator.lunarDaysRemaining')}</div>
-                  <div className="text-2xl font-bold text-green-400">{dateInfo.lunarDaysRemaining}</div>
-                </div>
+              <div className="text-sm text-blue-600">
+                Tháng {dateInfo.lunarDateDetailed.monthName}
               </div>
-              
-              <div className="grid grid-cols-2 gap-4">
-                <div className="text-center p-3 bg-white/50 rounded-lg border border-white/20">
-                  <div className="text-sm text-gray-600">Số tuần âm lịch</div>
-                  <div className="text-2xl font-bold text-green-400">{dateInfo.lunarWeekNumber}</div>
-                </div>
-                <div className="text-center p-3 bg-white/50 rounded-lg border border-white/20">
-                  <div className="text-sm text-gray-600">% năm âm lịch</div>
-                  <div className="text-2xl font-bold text-green-400">{dateInfo.lunarYearProgress}%</div>
-                </div>
+              {dateInfo.lunarDateDetailed.isLeapMonth && (
+                <Badge variant="secondary" className="mt-2 bg-blue-100 text-blue-700">
+                  Tháng nhuận
+                </Badge>
+              )}
+            </div>
+
+            {/* Lunar Calendar Statistics */}
+            <div className="grid grid-cols-2 gap-3">
+              <div className="text-center p-3 bg-white/70 rounded-lg border border-blue-200">
+                <div className="text-xs text-gray-600 mb-1">Ngày thứ</div>
+                <div className="text-2xl font-bold text-blue-600">{dateInfo.lunarDayOfYear}</div>
+                <div className="text-xs text-gray-500">âm lịch</div>
+              </div>
+              <div className="text-center p-3 bg-white/70 rounded-lg border border-blue-200">
+                <div className="text-xs text-gray-600 mb-1">Còn lại</div>
+                <div className="text-2xl font-bold text-blue-600">{dateInfo.lunarDaysRemaining}</div>
+                <div className="text-xs text-gray-500">ngày</div>
+              </div>
+              <div className="text-center p-3 bg-white/70 rounded-lg border border-blue-200">
+                <div className="text-xs text-gray-600 mb-1">Tuần thứ</div>
+                <div className="text-2xl font-bold text-blue-600">{dateInfo.lunarWeekNumber}</div>
+                <div className="text-xs text-gray-500">âm lịch</div>
+              </div>
+              <div className="text-center p-3 bg-white/70 rounded-lg border border-blue-200">
+                <div className="text-xs text-gray-600 mb-1">Tiến độ</div>
+                <div className="text-2xl font-bold text-blue-600">{dateInfo.lunarYearProgress}%</div>
+                <div className="text-xs text-gray-500">năm</div>
+              </div>
+            </div>
+
+            {/* Lunar Progress Bar */}
+            <div className="space-y-2">
+              <div className="flex justify-between text-xs text-gray-600">
+                <span>Tiến độ năm âm lịch {dateInfo.lunarDateDetailed.year}</span>
+                <span>{dateInfo.lunarYearProgress}%</span>
+              </div>
+              <div className="w-full bg-blue-100 rounded-full h-2">
+                <div 
+                  className="bg-gradient-to-r from-blue-400 to-indigo-500 h-2 rounded-full transition-all duration-500"
+                  style={{ width: `${dateInfo.lunarYearProgress}%` }}
+                ></div>
               </div>
             </div>
           </CardContent>
         </Card>
       </div>
 
-      {/* Additional Insights */}
+      {/* Can Chi and Additional Information */}
       <Card className="moonrise-card">
         <CardHeader>
-          <CardTitle className="flex items-center space-x-2 text-blue-600">
-            <TrendingUp className="w-5 h-5" />
-            <span>{t('dateCalculator.discoverMore')}</span>
+          <CardTitle className="flex items-center space-x-2 text-purple-600">
+            <Star className="w-5 h-5" />
+            <span>Thông Tin Bổ Sung</span>
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-            <div className="text-center p-4 bg-gradient-to-br from-blue-500/10 to-blue-600/5 rounded-lg border border-blue-500/20">
-              <Badge variant="secondary" className="mb-2 bg-blue-500/10 text-blue-400">
-                {t('dateCalculator.solarCalendar')}
-              </Badge>
-              <div className="text-sm text-gray-600">
-                Ngày thứ {dateInfo.dayOfYear} trong năm {currentDate.getFullYear()}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {/* Can Chi Information */}
+            <div className="p-4 bg-purple-50 rounded-lg border border-purple-200">
+              <h4 className="font-semibold text-purple-700 mb-3">Can Chi</h4>
+              <div className="space-y-2 text-sm">
+                <div className="flex justify-between">
+                  <span className="text-gray-600">Năm:</span>
+                  <span className="font-medium text-purple-600">{dateInfo.canChi.year}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-600">Tháng:</span>
+                  <span className="font-medium text-purple-600">{dateInfo.canChi.month}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-600">Ngày:</span>
+                  <span className="font-medium text-purple-600">{dateInfo.canChi.day}</span>
+                </div>
               </div>
             </div>
-            
-            <div className="text-center p-4 bg-gradient-to-br from-green-500/10 to-green-600/5 rounded-lg border border-green-500/20">
-              <Badge variant="secondary" className="mb-2 bg-green-500/10 text-green-400">
-                {t('dateCalculator.lunarCalendar')}
-              </Badge>
-              <div className="text-sm text-gray-600">
-                Ngày thứ {dateInfo.lunarDayOfYear} âm lịch
-              </div>
-            </div>
-            
-            <div className="text-center p-4 bg-gradient-to-br from-blue-600/10 to-purple-600/5 rounded-lg border border-blue-600/20">
-              <Badge variant="secondary" className="mb-2 bg-blue-600/10 text-blue-600">
-                Dương Lịch
-              </Badge>
-              <div className="text-sm text-gray-600">
-                {dateInfo.yearProgress}% của năm đã trôi qua
-              </div>
-            </div>
-            
-            <div className="text-center p-4 bg-gradient-to-br from-green-600/10 to-emerald-600/5 rounded-lg border border-green-600/20">
-              <Badge variant="secondary" className="mb-2 bg-green-600/10 text-green-600">
-                Âm Lịch
-              </Badge>
-              <div className="text-sm text-gray-600">
-                {dateInfo.lunarYearProgress}% năm âm lịch đã trôi qua
-              </div>
-            </div>
-          </div>
 
-          {/* Explore Insight Button */}
-          <div className="text-center">
-            <Button
-              onClick={handleExploreInsight}
-              className="moonrise-button"
-              size="lg"
-              disabled={!!dateError}
-            >
-              <Sparkles className="w-5 h-5 mr-2" />
-              Khám phá ý nghĩa ngày này
-            </Button>
+            {/* Zodiac Information */}
+            <div className="p-4 bg-green-50 rounded-lg border border-green-200">
+              <h4 className="font-semibold text-green-700 mb-3">Cung Hoàng Đạo</h4>
+              <div className="space-y-2 text-sm">
+                <div className="flex justify-between">
+                  <span className="text-gray-600">Con giáp:</span>
+                  <span className="font-medium text-green-600">{dateInfo.zodiacAnimal}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-600">Cung:</span>
+                  <span className="font-medium text-green-600">{dateInfo.constellation}</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Festivals and Events */}
+            <div className="p-4 bg-amber-50 rounded-lg border border-amber-200">
+              <h4 className="font-semibold text-amber-700 mb-3">Lễ Hội & Sự Kiện</h4>
+              {dateInfo.festivals.length > 0 ? (
+                <div className="space-y-1">
+                  {dateInfo.festivals.slice(0, 2).map((festival, index) => (
+                    <div key={index} className="text-xs text-amber-600 font-medium">
+                      {festival.name}
+                    </div>
+                  ))}
+                  {dateInfo.festivals.length > 2 && (
+                    <div className="text-xs text-gray-500">
+                      +{dateInfo.festivals.length - 2} lễ hội khác
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <div className="text-xs text-gray-500">Không có lễ hội đặc biệt</div>
+              )}
+            </div>
           </div>
+        </CardContent>
+      </Card>
+
+      {/* Insight Exploration - Prominent CTA */}
+      <Card className="moonrise-card">
+        <CardContent className="p-6 text-center">
+          <div className="mb-4">
+            <Star className="w-8 h-8 text-blue-400 mx-auto mb-2" />
+            <h3 className="text-lg font-semibold text-gray-800 mb-2">
+              Khám phá ý nghĩa sâu sắc
+            </h3>
+            <p className="text-gray-600 text-sm">
+              Tìm hiểu thêm về thần số học và ý nghĩa tâm linh của ngày này
+            </p>
+          </div>
+          
+          <Button
+            onClick={handleExploreInsight}
+            className="moonrise-button"
+            size="lg"
+            disabled={!!dateError}
+          >
+            <Sparkles className="w-5 h-5 mr-2" />
+            Khám phá ngay
+          </Button>
         </CardContent>
       </Card>
 
