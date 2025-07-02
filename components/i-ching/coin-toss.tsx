@@ -107,23 +107,23 @@ export function CoinToss({ onComplete }: CoinTossProps) {
       <CardHeader className="text-center">
         <CardTitle className="flex items-center justify-center space-x-2 text-mystical-gold">
           <Coins className="w-6 h-6" />
-          <span>Three Coin Oracle</span>
+          <span>Oracle Ba Đồng Xu</span>
         </CardTitle>
         <CardDescription>
-          Traditional I Ching method using three coins to generate hexagram lines
+          Phương pháp Kinh Dịch truyền thống sử dụng ba đồng xu để tạo vạch quẻ
         </CardDescription>
       </CardHeader>
 
       <CardContent className="space-y-6">
         {showInstructions && (
           <div className="bg-mystical-gold/5 p-4 rounded-lg border border-mystical-gold/20">
-            <h4 className="font-semibold text-mystical-gold mb-2">How to Cast</h4>
+            <h4 className="font-semibold text-mystical-gold mb-2">Cách Thực Hiện</h4>
             <ul className="text-sm text-muted-foreground space-y-1">
-              <li>• Think of your question clearly</li>
-              <li>• Toss three coins six times to build your hexagram</li>
-              <li>• Each toss creates one line, starting from the bottom</li>
-              <li>• Heads = 3 points, Tails = 2 points</li>
-              <li>• 6 points = changing yin, 7 = yin, 8 = yang, 9 = changing yang</li>
+              <li>• Suy nghĩ rõ ràng về câu hỏi của bạn</li>
+              <li>• Tung ba đồng xu sáu lần để xây dựng quẻ của bạn</li>
+              <li>• Mỗi lần tung tạo ra một vạch, bắt đầu từ dưới lên</li>
+              <li>• Mặt ngửa = 3 điểm, Mặt sấp = 2 điểm</li>
+              <li>• 6 điểm = âm thay đổi, 7 = âm, 8 = dương, 9 = dương thay đổi</li>
             </ul>
           </div>
         )}
@@ -131,23 +131,23 @@ export function CoinToss({ onComplete }: CoinTossProps) {
         <div className="text-center space-y-4">
           <div className="flex items-center justify-center space-x-2">
             <Badge variant="secondary" className="bg-mystical-gold/10 text-mystical-gold">
-              Line {currentLine} of 6
+              Vạch {currentLine} / 6
             </Badge>
             <Badge variant="outline" className="border-mystical-gold/30">
-              Position: {7 - currentLine} (from bottom)
+              Vị trí: {7 - currentLine} (từ dưới lên)
             </Badge>
           </div>
 
           {results.length > 0 && (
             <div className="space-y-3">
-              <h4 className="font-semibold text-mystical-gold">Cast Results</h4>
+              <h4 className="font-semibold text-mystical-gold">Kết Quả Tung Xu</h4>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {results.map((result, index) => (
                   <Card key={index} className="bg-background/50">
                     <CardContent className="p-4">
                       <div className="text-center space-y-2">
                         <div className="text-sm font-medium text-mystical-gold">
-                          Line {index + 1}
+                          Vạch {index + 1}
                         </div>
                         <div className="flex justify-center space-x-1">
                           {renderCoin(result.coin1, 0)}
@@ -155,8 +155,8 @@ export function CoinToss({ onComplete }: CoinTossProps) {
                           {renderCoin(result.coin3, 2)}
                         </div>
                         <div className="text-xs text-muted-foreground">
-                          Total: {result.value} - {result.isYang ? 'Yang' : 'Yin'}
-                          {result.isChanging && ' (Changing)'}
+                          Tổng: {result.value} - {result.isYang ? 'Dương' : 'Âm'}
+                          {result.isChanging && ' (Thay đổi)'}
                         </div>
                       </div>
                     </CardContent>
@@ -175,7 +175,7 @@ export function CoinToss({ onComplete }: CoinTossProps) {
                 className="mystical-button w-full"
               >
                 <Coins className="w-5 h-5 mr-2" />
-                {isAnimating ? 'Casting...' : `Cast Line ${currentLine}`}
+                {isAnimating ? 'Đang tung...' : `Tung Vạch ${currentLine}`}
               </Button>
             </div>
           )}
@@ -184,7 +184,7 @@ export function CoinToss({ onComplete }: CoinTossProps) {
             <div className="space-y-4">
               <div className="text-center p-4 bg-mystical-gold/5 rounded-lg border border-mystical-gold/20">
                 <p className="text-mystical-gold font-semibold">
-                  Hexagram complete! Your reading is ready.
+                  Quẻ hoàn thành! Lời giải của bạn đã sẵn sàng.
                 </p>
               </div>
               <Button
@@ -193,7 +193,7 @@ export function CoinToss({ onComplete }: CoinTossProps) {
                 className="w-full border-mystical-gold/30 hover:border-mystical-gold"
               >
                 <RotateCcw className="w-4 h-4 mr-2" />
-                Cast New Reading
+                Tung Quẻ Mới
               </Button>
             </div>
           )}

@@ -91,13 +91,13 @@ export function HexagramDisplay({ hexagram, changingLines = [] }: HexagramDispla
           <div className="flex justify-center">
             <Card className="bg-background/50 backdrop-blur-sm">
               <CardHeader>
-                <CardTitle className="text-center text-mystical-gold">Hexagram Lines</CardTitle>
+                <CardTitle className="text-center text-mystical-gold">Vạch Quẻ</CardTitle>
               </CardHeader>
               <CardContent>
                 {renderHexagramLines()}
                 {changingLines.length > 0 && (
                   <p className="text-center text-sm text-muted-foreground mt-4">
-                    Changing lines: {changingLines.join(', ')}
+                    Vạch thay đổi: {changingLines.join(', ')}
                   </p>
                 )}
               </CardContent>
@@ -108,21 +108,21 @@ export function HexagramDisplay({ hexagram, changingLines = [] }: HexagramDispla
           <div>
             <Tabs defaultValue="meaning" className="w-full">
               <TabsList className="grid w-full grid-cols-2 lg:grid-cols-4">
-                <TabsTrigger value="meaning">Meaning</TabsTrigger>
-                <TabsTrigger value="advice">Advice</TabsTrigger>
-                <TabsTrigger value="relationships">Love</TabsTrigger>
-                <TabsTrigger value="career">Career</TabsTrigger>
+                <TabsTrigger value="meaning">Ý Nghĩa</TabsTrigger>
+                <TabsTrigger value="advice">Lời Khuyên</TabsTrigger>
+                <TabsTrigger value="relationships">Tình Yêu</TabsTrigger>
+                <TabsTrigger value="career">Sự Nghiệp</TabsTrigger>
               </TabsList>
               
               <TabsContent value="meaning" className="mt-4">
                 <ScrollArea className="h-[300px] w-full">
                   <div className="space-y-4">
                     <div>
-                      <h4 className="font-semibold text-mystical-gold mb-2">Core Meaning</h4>
+                      <h4 className="font-semibold text-mystical-gold mb-2">Ý Nghĩa Cốt Lõi</h4>
                       <p className="text-muted-foreground">{hexagram.meaning}</p>
                     </div>
                     <div>
-                      <h4 className="font-semibold text-mystical-gold mb-2">Interpretation</h4>
+                      <h4 className="font-semibold text-mystical-gold mb-2">Giải Thích</h4>
                       <p className="text-muted-foreground">{hexagram.interpretation}</p>
                     </div>
                   </div>
@@ -132,7 +132,7 @@ export function HexagramDisplay({ hexagram, changingLines = [] }: HexagramDispla
               <TabsContent value="advice" className="mt-4">
                 <ScrollArea className="h-[300px] w-full">
                   <div>
-                    <h4 className="font-semibold text-mystical-gold mb-2">Guidance</h4>
+                    <h4 className="font-semibold text-mystical-gold mb-2">Hướng Dẫn</h4>
                     <p className="text-muted-foreground">{hexagram.advice}</p>
                   </div>
                 </ScrollArea>
@@ -141,7 +141,7 @@ export function HexagramDisplay({ hexagram, changingLines = [] }: HexagramDispla
               <TabsContent value="relationships" className="mt-4">
                 <ScrollArea className="h-[300px] w-full">
                   <div>
-                    <h4 className="font-semibold text-mystical-gold mb-2">Relationships & Love</h4>
+                    <h4 className="font-semibold text-mystical-gold mb-2">Tình Yêu & Các Mối Quan Hệ</h4>
                     <p className="text-muted-foreground">{hexagram.relationships}</p>
                   </div>
                 </ScrollArea>
@@ -151,11 +151,11 @@ export function HexagramDisplay({ hexagram, changingLines = [] }: HexagramDispla
                 <ScrollArea className="h-[300px] w-full">
                   <div className="space-y-4">
                     <div>
-                      <h4 className="font-semibold text-mystical-gold mb-2">Career & Work</h4>
+                      <h4 className="font-semibold text-mystical-gold mb-2">Sự Nghiệp & Công Việc</h4>
                       <p className="text-muted-foreground">{hexagram.career}</p>
                     </div>
                     <div>
-                      <h4 className="font-semibold text-mystical-gold mb-2">Health & Wellness</h4>
+                      <h4 className="font-semibold text-mystical-gold mb-2">Sức Khỏe & Thể Chất</h4>
                       <p className="text-muted-foreground">{hexagram.health}</p>
                     </div>
                   </div>
@@ -168,13 +168,13 @@ export function HexagramDisplay({ hexagram, changingLines = [] }: HexagramDispla
         {/* Changing Lines Interpretation */}
         {changingLines.length > 0 && (
           <div className="mt-6 p-4 bg-mystical-gold/5 rounded-lg border border-mystical-gold/20">
-            <h4 className="font-semibold text-mystical-gold mb-3">Changing Lines Interpretation</h4>
+            <h4 className="font-semibold text-mystical-gold mb-3">Giải Thích Vạch Thay Đổi</h4>
             <div className="space-y-2">
               {changingLines.map((lineNumber) => (
                 <div key={lineNumber} className="text-sm">
-                  <span className="font-medium text-mystical-gold">Line {lineNumber}:</span>
+                  <span className="font-medium text-mystical-gold">Vạch {lineNumber}:</span>
                   <span className="text-muted-foreground ml-2">
-                    {hexagram.changingLines[lineNumber] || 'No specific interpretation available.'}
+                    {hexagram.changingLines[lineNumber] || 'Không có giải thích cụ thể.'}
                   </span>
                 </div>
               ))}
